@@ -7,6 +7,6 @@ import { Component } from '@angular/core';
   templateUrl: './input-output.component.html',
   styleUrl: './input-output.component.css'
 })
-export class InputOutputComponent {
+export default class InputOutputComponent {
 
 }
