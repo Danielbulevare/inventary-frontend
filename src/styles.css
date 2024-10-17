@@ -1,1 +1,18 @@
-/* You can add global styles to this file, and also import other style files */
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.btn {
+  background-color: #AC0B0B;
+  padding: 10px;
+  border: none;
+  border-radius: 15px;
+  color: white;
+}
+
+.btn:hover {
+  background-color: #C71617;
+}
+
+.wide-btn{
+  width: 100%;
+}

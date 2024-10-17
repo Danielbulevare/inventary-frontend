@@ -1,0 +1,56 @@
+<form>
+  <!--Entrada correo-->
+  <mat-form-field class="wide-container">
+    <mat-label>Correo</mat-label>
+    <input
+      matInput
+      type="text"
+      [formControl]="mail"
+      placeholder="Ej. usuario@gmail.com"
+    />
+    @if (mail.value) {
+    <button
+      type="button"
+      matSuffix
+      mat-icon-button
+      aria-label="Clear"
+      (click)="mail.setValue('')"
+    >
+      <mat-icon>close</mat-icon>
+    </button>
+
+    } @if(mail.hasError('required')){
+    <mat-error>El correo es <strong>requerido</strong></mat-error
+    >} @if(mail.hasError('email')){
+    <mat-error>Agrega un correo <strong>válido</strong></mat-error>
+    }
+  </mat-form-field>
+
+  <!--Entrada contraseña-->
+
+  <mat-form-field class="wide-container">
+    <mat-label>Contraseña</mat-label>
+    <input
+      matInput
+      [formControl]="password"
+      [type]="showPassword ? 'password' : 'text'"
+      placeholder="Ingresa la contraseña"
+    />
+    <button
+      type="button"
+      mat-icon-button
+      matSuffix
+      (click)="showPassword = !showPassword"
+      [attr.aria-label]="'Hide password'"
+      [attr.aria-pressed]="showPassword"
+    >
+      <mat-icon>{{ showPassword ? "visibility_off" : "visibility" }}</mat-icon>
+    </button>
+
+    @if (password.hasError('required')) {
+    <mat-error>La contraseña es <strong>requerida</strong></mat-error>
+    }
+  </mat-form-field>
+
+  <button type="button" class="btn wide-btn">Iniciar sesión</button>
+</form>
