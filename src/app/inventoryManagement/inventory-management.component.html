@@ -1,3 +1,42 @@
-<app-header/>
-<p>inventory-management works!</p>
-<router-outlet />
+<app-header (openedChanged)="opened = $event" />
+<mat-sidenav-container>
+  <mat-sidenav mode="side" [(opened)]="opened">
+    <mat-card appearance="raised">
+      <nav>
+        <ul class="delete-point">
+          <li>
+            <app-menu-item
+              link="/inventory-management/products"
+              imgPath="assets/img/products.svg"
+              nameElement="Productos"
+            />
+          </li>
+          <li>
+            <app-menu-item
+              link="/inventory-management/stock"
+              imgPath="assets/img/inventory.svg"
+              nameElement="Stock"
+            />
+          </li>
+          <li>
+            <app-menu-item
+              link="/inventory-management/input-output"
+              imgPath="assets/img/input-output.svg"
+              nameElement="Entrada / Salida"
+            />
+          </li>
+          <li>
+            <app-menu-item
+              link="/inventory-management/historical"
+              imgPath="assets/img/historical.svg"
+              nameElement="Histórico"
+            />
+          </li>
+        </ul>
+      </nav>
+    </mat-card>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <router-outlet />
+  </mat-sidenav-content>
+</mat-sidenav-container>

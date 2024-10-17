@@ -1,0 +1,16 @@
+nav, ul, li{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.delete-point{
+  list-style: none;
+}
+
+mat-sidenav-container{
+  height: 100vh;
+}
+
+mat-sidenav{
+  width: 250px;
+}

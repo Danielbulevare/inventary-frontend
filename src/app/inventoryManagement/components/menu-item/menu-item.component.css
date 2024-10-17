@@ -1,0 +1,35 @@
+h6, div{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.inactive-element{
+  background-color: gray;
+}
+
+.active{
+  background-color: #AC0B0B;
+}
+
+.online-elements{
+  display: flex;
+  align-items: center;
+}
+
+a{
+  color: white;
+  text-decoration: none;
+}
+
+img{
+  height: 30px;
+}
+
+mat-card{
+
+  padding: 3px;
+}
+
+mat-card:hover{
+  background-color: #C71617;
+}
