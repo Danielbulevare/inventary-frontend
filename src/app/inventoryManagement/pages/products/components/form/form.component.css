@@ -1,0 +1,12 @@
+.wide-container {
+  width: 100%;
+}
+
+.status-color{
+  color: green;
+}
+
+.align-in-line{
+  display: flex;
+  align-items: center;
+}

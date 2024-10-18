@@ -1,0 +1,11 @@
+.linear-to-extremes{
+  display: flex;
+}
+
+.take-up-the-full-width{
+  width: 100%;
+}
+
+.left-margin{
+  margin-left: 10px;
+}
