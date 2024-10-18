@@ -1,4 +1,4 @@
-section, article, div, h5, h6{
+section, article, div, strong, span{
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -26,4 +26,12 @@ section, article, div, h5, h6{
 span{
   font-size: small;
   color: gray;
+}
+
+.margin{
+  margin: 5px;
+}
+
+.padding{
+  padding: 5px;
 }

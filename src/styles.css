@@ -17,6 +17,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   width: 100%;
 }
 
+.wide-container {
+  width: 100%;
+}
+
 mat-card {
   margin-bottom: 5px;
   margin-left: 5px;

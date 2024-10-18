@@ -1,0 +1,60 @@
+<form>
+  <!--Entrada Id producto-->
+  <mat-form-field class="wide-container">
+    <mat-label>Id producto</mat-label>
+    <input matInput type="text" [formControl]="idProduct" placeholder="Ej. 1" />
+    @if (idProduct.value) {
+    <button
+      type="button"
+      matSuffix
+      mat-icon-button
+      aria-label="Clear"
+      (click)="idProduct.setValue('')"
+    >
+      <mat-icon>close</mat-icon>
+    </button>
+    } @if (idProduct.hasError('required')) {
+    <mat-error>El número de Id es <strong>requerido</strong></mat-error>
+    } @if(idProduct.hasError('pattern')){
+    <mat-error
+      >Solo se deben introducir <strong>números enteros</strong></mat-error
+    >}
+  </mat-form-field>
+
+  <!--Entrada cantidad-->
+  <mat-form-field class="wide-container">
+    <mat-label>Cantidad</mat-label>
+    <input
+      matInput
+      type="text"
+      [formControl]="quantity"
+      placeholder="Ej. 1000"
+    />
+    @if (quantity.value) {
+    <button
+      type="button"
+      matSuffix
+      mat-icon-button
+      aria-label="Clear"
+      (click)="quantity.setValue('')"
+    >
+      <mat-icon>close</mat-icon>
+    </button>
+    } @if (quantity.hasError('required')) {
+    <mat-error>La cantidad es <strong>requerida</strong></mat-error>
+    } @if(quantity.hasError('pattern')){
+    <mat-error
+      >Solo se deben introducir <strong>números enteros</strong></mat-error
+    >}
+  </mat-form-field>
+
+  <!--Entrada movimiento-->
+  <mat-form-field class="wide-container">
+    <mat-label>Selecciona el tipo de movimiento</mat-label>
+    <mat-select [formControl]="move">
+      <mat-option value="1">Entrada</mat-option>
+      <mat-option value="2">Salida</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <button type="button" class="btn">Guardar</button>
+</form>

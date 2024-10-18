@@ -1,0 +1,18 @@
+<form [formGroup]="form">
+  <!--Entrada nombre producto-->
+  <mat-form-field class="wide-container">
+    <mat-label>Nombre producto</mat-label>
+    <input matInput type="text" formControlName="nameProduct" placeholder="Ej. Caja 1" />
+  </mat-form-field>
+
+  <!--Entrada cantidad-->
+  <mat-form-field class="wide-container">
+    <mat-label>Existencia</mat-label>
+    <input
+      matInput
+      type="text"
+      formControlName="existence"
+      placeholder="Ej. 1000"
+    />
+  </mat-form-field>
+</form>
