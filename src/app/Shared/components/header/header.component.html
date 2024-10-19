@@ -1,30 +1,47 @@
 <mat-card appearance="raised" class="margin padding">
-    <section class="align-to-ends">
-      <section class="logo">
-        <article>
-          <button
-            (click)="showNavigation()"
-            mat-icon-button
-            class="example-icon"
-            aria-label="Example icon-button with menu icon"
-          >
-            <mat-icon>menu</mat-icon>
-          </button>
-        </article>
-        <article>
-          <img
-            src="assets/img/logo.svg"
-            alt="Application logo"
-            class="logo-size"
-          />
-        </article>
-        <article><strong>Gestión inventario</strong></article>
-      </section>
+  <section class="align-to-ends">
+    <section class="logo">
+      <article>
+        <button
+          (click)="showNavigation()"
+          mat-icon-button
+          class="example-icon"
+          aria-label="Example icon-button with menu icon"
+        >
+          <mat-icon>menu</mat-icon>
+        </button>
+      </article>
+      <article>
+        <img
+          src="assets/img/logo.svg"
+          alt="Application logo"
+          class="logo-size"
+        />
+      </article>
+      <article><strong>Gestión inventario</strong></article>
+    </section>
 
-      <section class="align-text-right">
+    <section class="line-up-in-a-row">
+      <div class="align-text-right">
         <div><b>¡Bienvenido!</b></div>
         <div>Juan Carlos Daniel Rodriguez Vazquez</div>
         <div><span>Administrador</span></div>
-      </section>
+      </div>
+
+      <article class="margin-left">
+        <button
+          (click)="showMenuOptions()"
+          #tooltip="matTooltip"
+          matTooltip="Más opciones"
+          matTooltipPosition="left"
+          matTooltipHideDelay="100"
+          mat-icon-button
+          class="example-icon"
+          aria-label="Example icon-button with log-out icon"
+        >
+          <mat-icon>arrow_drop_down</mat-icon>
+        </button>
+      </article>
     </section>
+  </section>
 </mat-card>

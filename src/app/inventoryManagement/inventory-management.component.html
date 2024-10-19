@@ -1,4 +1,8 @@
-<app-header (openedChanged)="opened = $event" />
+<app-header
+  (openedChanged)="opened = $event"
+  (openMenuChanged)="openMenu = $event"
+/>
+
 <mat-sidenav-container>
   <mat-sidenav mode="side" [(opened)]="opened">
     <mat-card appearance="raised">
@@ -39,6 +43,19 @@
   <mat-sidenav-content>
     <mat-card appearance="raised">
       <mat-card-content>
+        <!--Menú opciones-->
+        @if (openMenu) {
+        <mat-card appearance="outlined" class="options-menu">
+          <mat-list>
+            <mat-list-item (click)="cerrarSesion()">
+              Cerrar sesión
+            </mat-list-item>
+            <mat-divider class="margin"></mat-divider>
+          </mat-list>
+        </mat-card>
+        }
+
+        <!--Formularios-->
         <router-outlet />
       </mat-card-content>
     </mat-card>

@@ -32,6 +32,15 @@ span{
   margin: 5px;
 }
 
+.margin-left {
+  margin-left: 5px;
+}
+
 .padding{
   padding: 5px;
+}
+
+.line-up-in-a-row{
+  display: flex;
+  align-items: center;
 }

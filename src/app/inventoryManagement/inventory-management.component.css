@@ -10,3 +10,30 @@ nav, ul, li{
 mat-sidenav{
   width: 250px;
 }
+
+.margin{
+  margin: 5px;
+}
+
+.options-menu {
+  width: 200px;
+  height: 70px;
+
+  position: fixed;
+  top: 65px; /*Posiciona el menú debajo del botón*/
+  bottom: 0;
+  left: 500; /*Posiciona el menú hasta el final*/
+  right: 0;
+}
+
+mat-list{
+  padding: 5px;
+}
+
+mat-list-item {
+  border-radius: 15px;
+}
+
+mat-list-item:hover {
+  background-color: gray;
+}
