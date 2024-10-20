@@ -1,11 +1,11 @@
-<form>
+<form [formGroup]="formLogin">
   <!--Entrada correo-->
   <mat-form-field class="wide-container">
     <mat-label>Correo</mat-label>
     <input
       matInput
       type="text"
-      [formControl]="mail"
+      formControlName="mail"
       placeholder="Ej. usuario@gmail.com"
     />
     @if (mail.value) {
@@ -32,7 +32,7 @@
     <mat-label>Contraseña</mat-label>
     <input
       matInput
-      [formControl]="password"
+      formControlName="password"
       [type]="showPassword ? 'password' : 'text'"
       placeholder="Ingresa la contraseña"
     />
@@ -52,5 +52,5 @@
     }
   </mat-form-field>
 
-  <button type="button" class="btn wide-btn">Iniciar sesión</button>
+  <button (click)="login()" type="button" class="btn wide-btn" [hidden]="formLogin.invalid">Iniciar sesión</button>
 </form>

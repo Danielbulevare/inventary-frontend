@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { HeaderComponent } from '../Shared/components/header/header.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatCardModule } from '@angular/material/card';
 import { MenuItemComponent } from './components/menu-item/menu-item.component';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatListModule } from '@angular/material/list';
+import { AuthService } from '../Auth/services/auth.service';
 
 @Component({
   selector: 'app-inventory-management',
@@ -27,7 +28,9 @@ export default class InventoryManagementComponent {
   opened: boolean = false;
   openMenu: boolean = false;
 
-  cerrarSesion() {
-    alert('s')
+  constructor(private AuthService: AuthService, private router: Router) {}
+
+  logout(): void {
+    this.AuthService.logout();
   }
 }
