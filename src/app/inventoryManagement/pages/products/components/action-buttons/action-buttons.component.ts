@@ -3,6 +3,8 @@ import { MatIconRegistry, MatIconModule } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { ActionsButtonsService } from '../../../../services/products/actions-buttons.service';
+import { CRU } from '../../../../enums/CRU';
 
 const ADD_ICON = `<svg viewBox="0 0 512 512" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>add-circle-filled</title> <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> <g id="drop" fill="#AC0B0B" transform="translate(42.666667, 42.666667)"> <path d="M213.333333,3.55271368e-14 C269.912851,3.55271368e-14 324.175019,22.4761259 364.18278,62.4838867 C404.190541,102.491647 426.666667,156.753816 426.666667,213.333333 C426.666667,331.15408 331.15408,426.666667 213.333333,426.666667 C95.5125867,426.666667 3.55271368e-14,331.15408 3.55271368e-14,213.333333 C3.55271368e-14,95.5125867 95.5125867,3.55271368e-14 213.333333,3.55271368e-14 Z M234.666667,106.666667 L192,106.666667 L192,192 L106.666667,192 L106.666667,234.666667 L192,234.666 L192,320 L234.666667,320 L234.666,234.666 L320,234.666667 L320,192 L234.666,192 L234.666667,106.666667 Z" id="add-workorder"> </path> </g> </g> </g></svg>`;
 const SEARCH_ICON = `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M14.9536 14.9458L21 21M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z" stroke="#AC0B0B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>`;
@@ -16,6 +18,8 @@ const EDIT_ICON = `<svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="ht
   styleUrl: './action-buttons.component.css',
 })
 export class ActionButtonsComponent {
+  private action = inject(ActionsButtonsService);
+
   constructor() {
     const iconRegistry = inject(MatIconRegistry);
     const sanitizer = inject(DomSanitizer);
@@ -34,5 +38,18 @@ export class ActionButtonsComponent {
       'edit_icon',
       sanitizer.bypassSecurityTrustHtml(EDIT_ICON)
     );
+  }
+
+  public newProduct(){
+    this.action.setAction(CRU.CREATE);
+  }
+  public searhProduct(){
+    this.action.setAction(CRU.READ);
+  }
+  public editProduct(){
+    this.action.setAction(CRU.UPDATE);
+  }
+  public noneProduct(){
+    this.action.setAction(CRU.NONE);
   }
 }

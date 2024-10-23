@@ -1,6 +1,8 @@
 <div>
+  <!--Botón nuevo producto-->
   <div>
     <button
+      (click)="newProduct()"
       #tooltip="matTooltip"
       matTooltip="Agregar nuevo producto"
       matTooltipPosition="left"
@@ -15,8 +17,11 @@
       ></mat-icon>
     </button>
   </div>
+
+  <!--Botón buscar product-->
   <div>
     <button
+      (click)="searhProduct()"
       #tooltip="matTooltip"
       matTooltip="Buscar producto"
       matTooltipPosition="left"
@@ -31,8 +36,11 @@
       ></mat-icon>
     </button>
   </div>
+
+  <!--Botón editar producto-->
   <div>
     <button
+      (click)="editProduct()"
       #tooltip="matTooltip"
       matTooltip="Editar producto"
       matTooltipPosition="left"

@@ -1,0 +1,12 @@
+:host {
+  display: flex;
+}
+
+span{
+  color: white;
+}
+
+img{
+  height: 15px;
+  width: 15px;
+}
