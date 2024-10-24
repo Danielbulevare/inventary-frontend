@@ -1,5 +1,5 @@
-import { Product } from "./Product";
+import { Products } from "./products";
 
-export class ProductWithId extends Product{
+export class ProductWithId extends Products{
   id: Number = 0;
 }

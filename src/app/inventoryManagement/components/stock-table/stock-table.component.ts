@@ -1,26 +1,15 @@
-import { Component } from '@angular/core';
+import {
+  Component,
+  inject,
+  Input,
+  OnChanges,
+  SimpleChanges,
+} from '@angular/core';
 import { MatTableModule } from '@angular/material/table';
-
-
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  { position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H' },
-  { position: 2, name: 'Helium', weight: 4.0026, symbol: 'He' },
-  { position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li' },
-  { position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be' },
-  { position: 5, name: 'Boron', weight: 10.811, symbol: 'B' },
-  { position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C' },
-  { position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N' },
-  { position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O' },
-  { position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F' },
-  { position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne' },
-];
+import { TblProductsStock } from '../../../core/interfaces/tbl-products-stock';
+import { ProductsServiceService } from '../../../core/services/products/products-service.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { PopPutComponent } from '../../../Shared/components/pop-put/pop-put.component';
 
 @Component({
   selector: 'app-stock-table',
@@ -29,7 +18,52 @@ const ELEMENT_DATA: PeriodicElement[] = [
   templateUrl: './stock-table.component.html',
   styleUrl: './stock-table.component.css',
 })
-export class StockTableComponent {
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
-  dataSource = ELEMENT_DATA;
+export class StockTableComponent implements OnChanges {
+  private productsService = inject(ProductsServiceService);
+  private _snackBar = inject(MatSnackBar);
+
+  displayedColumns: string[] = [
+    'idProduct',
+    'nameProduct',
+    'existence',
+    'status',
+  ];
+  //dataSource = ELEMENT_DATA;
+  dataSource: TblProductsStock[] = [];
+  durationInSeconds = 5; //Duración de visualización del pop-put
+
+  @Input() statusSelect: string = '';
+
+  ngOnChanges(changes: SimpleChanges): void {
+    //Este método incoca al servicio para mandar llaamar a los productos filtrados por el estatus
+
+    this.productsService.getProductsExistence(this.statusSelect).subscribe({
+      next: (response: TblProductsStock[]) => {
+        this.dataSource = response; //Llena la tabla con losa satos que regresa la api
+
+        if (response.length === 0) {
+          this.openSnackBar(
+            `No se encontraron productos con el estatus seleccionado que tengan existencias.`,
+            'assets/img/success.svg'
+          );
+        }
+      },
+      error: (response: any) => {
+        this.openSnackBar(response.error.message, 'assets/img/cancel.svg');
+      },
+    });
+  }
+
+  openSnackBar(message: string, img: string) {
+    /*
+    Este método se encarga de mostrar el componente pop-put por un límite de tiempo
+    */
+    this._snackBar.openFromComponent(PopPutComponent, {
+      duration: this.durationInSeconds * 1000,
+      data: {
+        message: message,
+        img: img,
+      },
+    });
+  }
 }

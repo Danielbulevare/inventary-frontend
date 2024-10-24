@@ -20,6 +20,7 @@ import { ProductWithId } from '../../../core/models/products/product-with-id';
 import { Employee } from '../../../core/models/employees/Employee';
 import { UserDataServiceService } from '../../../core/services/user-data/user-data-service.service';
 import { Movements } from '../../enums/Movements';
+import { ProductsServiceService } from '../../../core/services/products/products-service.service';
 
 @Component({
   selector: 'app-form-input-output',
@@ -40,6 +41,7 @@ import { Movements } from '../../enums/Movements';
 export class FormInputOutputComponent implements OnInit {
   private _snackBar = inject(MatSnackBar);
   private transactionsService = inject(TransactionServiceService);
+  private productsService = inject(ProductsServiceService);
   private userDataService = inject(UserDataServiceService);
 
   private transaction: Transaction = new Transaction();
@@ -47,6 +49,7 @@ export class FormInputOutputComponent implements OnInit {
   private employee: Employee = new Employee();
 
   durationInSeconds = 5; //Duración de visualización del pop-put
+  hiddenButton: boolean = false;
 
   inputOutputForm = new FormGroup({
     idProduct: new FormControl('', [
@@ -141,6 +144,50 @@ export class FormInputOutputComponent implements OnInit {
       error: (response: any) => {
         this.openSnackBar(response.error.message, 'assets/img/cancel.svg');
         this.clearForm();
+      },
+    });
+  }
+
+  getStatusProduct() {
+    /*
+    Este método se encarga de buscar el producto y obtener su estatus para validar si mostrar
+    el botón de guardar (si el estatus es Activo muestra el botón, si es Inactivo lo ocultará,
+    si no existe, también lo ocultará)
+    */
+
+    if (isNaN(this.idProduct.value)) {
+      /*
+      Si no es número, oculta el botón y termina la función
+      */
+      this.hiddenButton = true;
+      return;
+    }
+
+    let id = parseInt(this.idProduct.value || '0');
+
+    if (id <= 0) {
+      /*
+      Si el id es menor o igual a cero, oculta el botón
+      */
+      this.hiddenButton = true;
+      return;
+    }
+
+    this.productsService.searchProduct(id).subscribe({
+      next: (response: any) => {
+        if (response.status == 'Inactivo') {
+          this.hiddenButton = true;
+          this.openSnackBar(
+            `El producto está inactivo, no puedes realizar movimientos.`,
+            'assets/img/cancel.svg'
+          );
+        } else {
+          this.hiddenButton = false;
+        }
+      },
+      error: (response: any) => {
+        this.hiddenButton = true;
+        this.openSnackBar(response.error.message, 'assets/img/cancel.svg');
       },
     });
   }

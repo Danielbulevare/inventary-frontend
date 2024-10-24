@@ -48,7 +48,7 @@ export class DetailFormComponent implements OnChanges {
     this.detailFormProduct.get('existence')?.disable();
   }
   ngOnChanges(changes: SimpleChanges): void {
-    //Valida que se haya pasado un número entero
+    //Valida que se haya pasado un número entero y que sea mayor a cero (que el id sea de 1 en adelante)
     if (!isNaN(this.idProduct) && this.idProduct > 0) {
       this.getStockProduct();
     } else {

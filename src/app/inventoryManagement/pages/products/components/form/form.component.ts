@@ -20,11 +20,11 @@ import {
 } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { CRU } from '../../../../enums/CRU';
-import { Product } from '../../../../../core/models/products/Product';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { PopPutComponent } from '../../../../../Shared/components/pop-put/pop-put.component';
 import { ProductsServiceService } from '../../../../../core/services/products/products-service.service';
 import { Status } from '../../../../../core/models/estatus/status';
+import { Products } from '../../../../../core/models/products/products';
 
 const ADD_ICON = `<svg viewBox="0 0 512 512" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>add-circle-filled</title> <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> <g id="drop" fill="#AC0B0B" transform="translate(42.666667, 42.666667)"> <path d="M213.333333,3.55271368e-14 C269.912851,3.55271368e-14 324.175019,22.4761259 364.18278,62.4838867 C404.190541,102.491647 426.666667,156.753816 426.666667,213.333333 C426.666667,331.15408 331.15408,426.666667 213.333333,426.666667 C95.5125867,426.666667 3.55271368e-14,331.15408 3.55271368e-14,213.333333 C3.55271368e-14,95.5125867 95.5125867,3.55271368e-14 213.333333,3.55271368e-14 Z M234.666667,106.666667 L192,106.666667 L192,192 L106.666667,192 L106.666667,234.666667 L192,234.666 L192,320 L234.666667,320 L234.666,234.666 L320,234.666667 L320,192 L234.666,192 L234.666667,106.666667 Z" id="add-workorder"> </path> </g> </g> </g></svg>`;
 const SEARCH_ICON = `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M14.9536 14.9458L21 21M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z" stroke="#AC0B0B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>`;
@@ -56,7 +56,7 @@ export class FormComponent implements OnInit {
   @ViewChild('txtId') txtId!: ElementRef;
   @ViewChild('txtNameProduct') txtNameProduct!: ElementRef;
 
-  private product: Product = new Product();
+  private product: Products = new Products();
   private status: Status = new Status();
 
   formProduct = new FormGroup({
@@ -266,6 +266,7 @@ export class FormComponent implements OnInit {
       error: (response: any) => {
         this.openSnackBar(response.error.message, 'assets/img/cancel.svg');
         this.chageStatusColor(response.idStatus);
+        this.clearForm();
       },
     });
   }

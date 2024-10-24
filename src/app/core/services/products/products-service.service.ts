@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Product } from '../../models/products/Product';
-
+import { Products } from '../../models/products/products';
+import { TblProductsStock } from '../../interfaces/tbl-products-stock';
 
 @Injectable({
   providedIn: 'root',
@@ -12,12 +12,9 @@ export class ProductsServiceService {
 
   constructor(private httpClient: HttpClient) {}
 
-  /*getProducById(): Observable<ProductById>{
-    return this.httpClient.get<ProductById>(this.baseURL + '/findProductById'});
-  }*/
-  saveProduct(product: Product): Observable<any> {
+  saveProduct(product: Products): Observable<any> {
     //Este método registra un producto en la BD
-    return this.httpClient.post<Product>(
+    return this.httpClient.post<Products>(
       `${this.baseURL}/saveProduct`,
       product
     );
@@ -33,11 +30,19 @@ export class ProductsServiceService {
     return this.httpClient.get<any>(`${this.baseURL}/findProductStock/${id}`);
   }
 
-  updateProduct(id: Number, product: Product): Observable<any> {
+  updateProduct(id: Number, product: Products): Observable<any> {
     //Este método actualiza un producto dentro de la BD
     return this.httpClient.put<any>(
       `${this.baseURL}/updateProduct/${id}`,
       product
+    );
+  }
+
+  getProductsExistence(IdStatus: string): Observable<TblProductsStock[]> {
+    let id = parseInt(IdStatus);
+    //Este método regresa una arreglo de los productos con su exostencia total filtrado por estatus
+    return this.httpClient.get<TblProductsStock[]>(
+      `${this.baseURL}/findProductsWithQuantityFilteredByStatus/${id}`
     );
   }
 }

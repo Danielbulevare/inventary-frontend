@@ -2,7 +2,14 @@
   <!--Entrada Id producto-->
   <mat-form-field class="wide-container">
     <mat-label>Id producto</mat-label>
-    <input matInput type="text" formControlName="idProduct" placeholder="Ej. 1" />
+    <input
+    (keyup)="getStatusProduct()"
+          autocomplete="off"
+      matInput
+      type="text"
+      formControlName="idProduct"
+      placeholder="Ej. 1"
+    />
     @if (idProduct.value) {
     <button
       type="button"
@@ -29,6 +36,7 @@
       type="text"
       formControlName="quantity"
       placeholder="Ej. 1000"
+      autocomplete="off"
     />
     @if (quantity.value) {
     <button
@@ -56,8 +64,15 @@
       <mat-option value="2">SALIDA</mat-option>
     </mat-select>
   </mat-form-field>
-  <button type="button" class="btn" (click)="saveTransactionMovement()" [hidden]="inputOutputForm.invalid">Guardar</button>
+  <button
+    type="button"
+    class="btn"
+    (click)="saveTransactionMovement()"
+    [hidden]="inputOutputForm.invalid || hiddenButton"
+  >
+    Guardar
+  </button>
 </form>
 
 <h6>Detalle</h6>
-<app-detail-form [idProduct]="idProduct.value || '0'"/>
+<app-detail-form [idProduct]="idProduct.value || '0'" />
