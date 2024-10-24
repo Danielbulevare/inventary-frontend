@@ -1,4 +1,4 @@
-import { Status } from "../status/status";
+import { Status } from "../estatus/status";
 
 export class Product {
   name: string = '';

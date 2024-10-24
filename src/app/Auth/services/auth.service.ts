@@ -1,28 +1,36 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, tap } from 'rxjs';
+import { UserDataServiceService } from '../../core/services/user-data/user-data-service.service';
+import { Role } from '../../core/models/roles/Role';
+import { Status } from '../../core/models/estatus/status';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
+  private userDataService = inject(UserDataServiceService);
   private LOGIN_URL: string =
     'http://localhost:8080/api/empleados/authenticate';
   private tokenKey: string = 'authToken';
 
   constructor(private httpClien: HttpClient, private router: Router) {}
 
-  login(mail: string | null | undefined, password: string | null | undefined): Observable<any> {
+  login(
+    mail: string | null | undefined,
+    password: string | null | undefined
+  ): Observable<any> {
     return this.httpClien.post<any>(this.LOGIN_URL, { mail, password }).pipe(
       /*
       tap, para interceptar la respuesta del servidor para realizar ciertas acciones, en este caso
       verifica si el servidor me envió en el payload el atributo o clave llamada 'token'
       */
       tap((response) => {
-        //Verifica que la respuesta del servidor me haaya regresado un payload con el nombre 'token'
+        //Verifica que la respuesta del servidor me haya regresado un payload con el nombre 'token'
         if (response.token) {
           this.setToken(response.token);
+          this.userDataService.updateUserData(); //Actualiza la información del usuario logueado
         }
       })
     );
@@ -35,10 +43,10 @@ export class AuthService {
 
   private getToken(): string | null {
     //Recupera el token siempre y cuando sea diferente de undefined, para quitar el error de la consola
-    if(typeof window !== 'undefined'){
+    if (typeof window !== 'undefined') {
       //Este método recupera el token desde el local storage
       return localStorage.getItem(this.tokenKey);
-    }else{
+    } else {
       return null;
     }
   }

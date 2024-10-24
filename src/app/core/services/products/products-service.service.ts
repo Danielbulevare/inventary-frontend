@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Product } from '../../../core/models/products/product';
+import { Product } from '../../models/products/Product';
+
 
 @Injectable({
   providedIn: 'root',
@@ -25,6 +26,11 @@ export class ProductsServiceService {
   searchProduct(id: Number): Observable<any> {
     //Este método busca un producto en la BD
     return this.httpClient.get<any>(`${this.baseURL}/findProductById/${id}`);
+  }
+
+  stockProduct(id: Number): Observable<any> {
+    //Este método busca un producto y su existencia en la BD
+    return this.httpClient.get<any>(`${this.baseURL}/findProductStock/${id}`);
   }
 
   updateProduct(id: Number, product: Product): Observable<any> {

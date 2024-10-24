@@ -1,8 +1,8 @@
-<form>
+<form [formGroup]="inputOutputForm">
   <!--Entrada Id producto-->
   <mat-form-field class="wide-container">
     <mat-label>Id producto</mat-label>
-    <input matInput type="text" [formControl]="idProduct" placeholder="Ej. 1" />
+    <input matInput type="text" formControlName="idProduct" placeholder="Ej. 1" />
     @if (idProduct.value) {
     <button
       type="button"
@@ -27,7 +27,7 @@
     <input
       matInput
       type="text"
-      [formControl]="quantity"
+      formControlName="quantity"
       placeholder="Ej. 1000"
     />
     @if (quantity.value) {
@@ -51,10 +51,13 @@
   <!--Entrada movimiento-->
   <mat-form-field class="wide-container">
     <mat-label>Selecciona el tipo de movimiento</mat-label>
-    <mat-select [formControl]="move">
-      <mat-option value="1">Entrada</mat-option>
-      <mat-option value="2">Salida</mat-option>
+    <mat-select formControlName="move">
+      <mat-option value="1">ENTRADA</mat-option>
+      <mat-option value="2">SALIDA</mat-option>
     </mat-select>
   </mat-form-field>
-  <button type="button" class="btn">Guardar</button>
+  <button type="button" class="btn" (click)="saveTransactionMovement()" [hidden]="inputOutputForm.invalid">Guardar</button>
 </form>
+
+<h6>Detalle</h6>
+<app-detail-form [idProduct]="idProduct.value || '0'"/>
