@@ -1,25 +1,15 @@
-import { Component } from '@angular/core';
+import {
+  Component,
+  inject,
+  Input,
+  OnChanges,
+  SimpleChanges,
+} from '@angular/core';
 import { MatTableModule } from '@angular/material/table';
-
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  { position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H' },
-  { position: 2, name: 'Helium', weight: 4.0026, symbol: 'He' },
-  { position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li' },
-  { position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be' },
-  { position: 5, name: 'Boron', weight: 10.811, symbol: 'B' },
-  { position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C' },
-  { position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N' },
-  { position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O' },
-  { position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F' },
-  { position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne' },
-];
+import { TransactionServiceService } from '../../../core/services/transactions/transaction-service.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { PopPutComponent } from '../../../Shared/components/pop-put/pop-put.component';
+import { TblTransactionInventory } from '../../../core/interfaces/tbl-transactionInventory';
 
 @Component({
   selector: 'app-histotical-table',
@@ -28,7 +18,68 @@ const ELEMENT_DATA: PeriodicElement[] = [
   templateUrl: './histotical-table.component.html',
   styleUrl: './histotical-table.component.css',
 })
-export class HistoticalTableComponent {
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
-  dataSource = ELEMENT_DATA;
+export class HistoticalTableComponent implements OnChanges {
+  private transactionsService = inject(TransactionServiceService);
+  private _snackBar = inject(MatSnackBar);
+
+  durationInSeconds = 5; //Duración de visualización del pop-put
+
+  displayedColumns: string[] = [
+    'idProduct',
+    'nameProduct',
+    'move',
+    'quantity',
+    'dateWithoutTime',
+    'dateWithTime',
+    'employeeName',
+  ];
+  dataSource: TblTransactionInventory[] = [];
+
+  @Input() moveSelect: string = '';
+
+  ngOnChanges(changes: SimpleChanges): void {
+    //Este método invoca al servicio para mandar llamar a los productos filtrados por el tipo de movimiento
+
+    let moveValue: string = '';
+
+    switch (this.moveSelect) {
+      case '1':
+        moveValue = 'ENTRADA';
+        break;
+      case '2':
+        moveValue = 'SALIDA';
+        break;
+    }
+
+    this.transactionsService
+      .getTransactionsInventoryByMoveType(moveValue)
+      .subscribe({
+        next: (response: TblTransactionInventory[]) => {
+          this.dataSource = response; //Llena la tabla con los datos que regresa la api
+
+          if (response.length === 0) {
+            this.openSnackBar(
+              `No se encontraron productos con el tipo de movimiento seleccionado.`,
+              'assets/img/success.svg'
+            );
+          }
+        },
+        error: (response: any) => {
+          this.openSnackBar(response.error.message, 'assets/img/cancel.svg');
+        },
+      });
+  }
+
+  openSnackBar(message: string, img: string) {
+    /*
+    Este método se encarga de mostrar el componente pop-put por un límite de tiempo
+    */
+    this._snackBar.openFromComponent(PopPutComponent, {
+      duration: this.durationInSeconds * 1000,
+      data: {
+        message: message,
+        img: img,
+      },
+    });
+  }
 }

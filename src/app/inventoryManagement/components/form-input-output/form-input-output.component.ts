@@ -44,7 +44,6 @@ export class FormInputOutputComponent implements OnInit {
   private productsService = inject(ProductsServiceService);
   private userDataService = inject(UserDataServiceService);
 
-  private transaction: Transaction = new Transaction();
   private product: ProductWithId = new ProductWithId();
   private employee: Employee = new Employee();
 
@@ -108,13 +107,15 @@ export class FormInputOutputComponent implements OnInit {
     y mandarlo al servicio para registrarlo en la BD
     */
 
+    let transaction: Transaction = new Transaction();
+
     this.product.id = parseInt(this.idProduct.value || '0');
 
     this.employee.id = this.userDataService.getId;
     this.employee.status = this.userDataService.getStatus;
     this.employee.role = this.userDataService.getRole;
 
-    this.transaction.employee = this.employee;
+    transaction.employee = this.employee;
 
     let moveTrsaction = parseInt(this.move.value || '0');
     let total = parseInt(this.quantity.value || '0');
@@ -122,18 +123,18 @@ export class FormInputOutputComponent implements OnInit {
     //Verifica que tipo de movimiento fue seleccionado
     switch (moveTrsaction) {
       case 1:
-        this.transaction.move = Movements.ENTRADA;
+        transaction.move = Movements.ENTRADA;
         break;
       case 2:
-        this.transaction.move = Movements.SALIDA;
+        transaction.move = Movements.SALIDA;
         total = -total; //Asigna el signo menos al ser una salida
         break;
     }
 
-    this.transaction.product = this.product;
-    this.transaction.quantity = total;
+    transaction.product = this.product;
+    transaction.quantity = total;
 
-    this.transactionsService.saveMove(this.transaction).subscribe({
+    this.transactionsService.saveMove(transaction).subscribe({
       next: (response: any) => {
         this.openSnackBar(
           `El movimiento fue registrado con el id ${response.id}.`,

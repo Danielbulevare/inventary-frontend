@@ -5,7 +5,7 @@ import { ProductWithId } from '../products/product-with-id';
 export class Transaction {
   quantity: Number = 0;
   move: Movements = Movements.ENTRADA;
-  dateWithoutTime: string = new Date().toISOString().split('T')[0]; //Ejemplo de formato: "2024-10-23"
+  dateWithoutTime: string = new Date().toLocaleDateString('en-CA'); //Recupera la fecha en mi zona horaria, pero con el formato YYYY-MM-dd
   dateWithTime: string = this.getFormattedDateTime(new Date());
   employee: Employee = {
     id: 0,

@@ -28,18 +28,18 @@ export class StockTableComponent implements OnChanges {
     'existence',
     'status',
   ];
-  //dataSource = ELEMENT_DATA;
+
   dataSource: TblProductsStock[] = [];
   durationInSeconds = 5; //Duración de visualización del pop-put
 
   @Input() statusSelect: string = '';
 
   ngOnChanges(changes: SimpleChanges): void {
-    //Este método incoca al servicio para mandar llaamar a los productos filtrados por el estatus
+    //Este método invoca al servicio para mandar llamar a los productos filtrados por el estatus
 
     this.productsService.getProductsExistence(this.statusSelect).subscribe({
       next: (response: TblProductsStock[]) => {
-        this.dataSource = response; //Llena la tabla con losa satos que regresa la api
+        this.dataSource = response; //Llena la tabla con los datos que regresa la api
 
         if (response.length === 0) {
           this.openSnackBar(
