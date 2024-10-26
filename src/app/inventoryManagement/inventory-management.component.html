@@ -8,34 +8,16 @@
     <mat-card appearance="raised">
       <nav>
         <ul class="delete-point">
+          <!--Muestra las opciones del menú o navegación dependiendo del rol del usuario-->
+          @for (item of showOptionByRole(); track $index) {
           <li>
             <app-menu-item
-              link="/inventory-management/products"
-              imgPath="assets/img/products.svg"
-              nameElement="Productos"
+              [link]="item.link"
+              [imgPath]="item.img"
+              [nameElement]="item.option"
             />
           </li>
-          <li>
-            <app-menu-item
-              link="/inventory-management/stock"
-              imgPath="assets/img/inventory.svg"
-              nameElement="Stock"
-            />
-          </li>
-          <li>
-            <app-menu-item
-              link="/inventory-management/input-output"
-              imgPath="assets/img/input-output.svg"
-              nameElement="Entrada / Salida"
-            />
-          </li>
-          <li>
-            <app-menu-item
-              link="/inventory-management/historical"
-              imgPath="assets/img/historical.svg"
-              nameElement="Histórico"
-            />
-          </li>
+          }
         </ul>
       </nav>
     </mat-card>
@@ -47,9 +29,7 @@
         @if (openMenu) {
         <mat-card appearance="outlined" class="options-menu">
           <mat-list>
-            <mat-list-item (click)="logout()">
-              Cerrar sesión
-            </mat-list-item>
+            <mat-list-item (click)="logout()"> Cerrar sesión </mat-list-item>
             <mat-divider class="margin"></mat-divider>
           </mat-list>
         </mat-card>

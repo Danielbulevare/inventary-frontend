@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { Observable, tap } from 'rxjs';
 import { UserDataServiceService } from '../../core/services/user-data/user-data-service.service';
 import { Role } from '../../core/models/roles/Role';
-import { Status } from '../../core/models/estatus/status';
 
 @Injectable({
   providedIn: 'root',
@@ -73,5 +72,10 @@ export class AuthService {
   logout(): void {
     localStorage.removeItem(this.tokenKey);
     this.router.navigate(['/login']);
+  }
+
+  getRoleUser(): Role{
+    this.userDataService.updateUserData(); //Actualiza la información del usuario logueado
+    return this.userDataService.getRole;
   }
 }

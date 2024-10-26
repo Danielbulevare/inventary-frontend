@@ -48,7 +48,7 @@ export class FormComponent {
 
   login(): void {
     this.AuthService.login(this.formLogin.get('mail')?.value, this.formLogin.get('password')?.value).subscribe({
-      next: () => this.router.navigate(['/inventory-management/products']),
+      next: () => this.router.navigate(['/inventory-management/stock']),
       error: (err) => alert('Fallo el login: ' + err),
     });
   }

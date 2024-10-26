@@ -4,8 +4,8 @@ import { AuthService } from '../../Auth/services/auth.service';
 
 export const authGuard: CanActivateFn = (route, state) => {
   /*
-Valida si no estamos autenticados, lo vamos a redireccionar al login
-*/
+  Valida si no estamos autenticados, lo vamos a redireccionar al login
+  */
 
   const authService = inject(AuthService);
   const router = inject(Router);

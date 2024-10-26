@@ -8,8 +8,8 @@ export const authenticatedGuard: CanActivateFn = (route, state) => {
 
   //Si esta autenticado, regresalo a la página de productos
   if (authService.isAuthenticated()) {
-    return router.navigate(['/inventory-management/products']);
+    return router.navigate(['/inventory-management/stock']);
   } else {
-    return true
+    return true;
   }
 };

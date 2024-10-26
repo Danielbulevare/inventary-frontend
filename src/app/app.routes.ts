@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { authGuard } from './core/guards/auth.guard';
 import { authenticatedGuard } from './core/guards/authenticated.guard';
+import { roleGuardGuard } from './core/guards/role-guard.guard';
 
 export const routes: Routes = [
   {
@@ -15,20 +16,23 @@ export const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: '/inventory-management/products',
+        redirectTo: '/inventory-management/stock',
         pathMatch: 'full',
-      },
-      {
-        path: 'products',
-        loadComponent: () =>
-          import('./inventoryManagement/pages/products/products.component'),
-        canActivate: [authGuard], //Protege la ruta de la aplicación si no está autenticado
       },
       {
         path: 'stock',
         loadComponent: () =>
           import('./inventoryManagement/pages/stock/stock.component'),
-        canActivate: [authGuard],
+        canActivate: [authGuard, roleGuardGuard],
+        data: { roles: ['General', 'Administrador'] },
+      },
+      {
+        path: 'products',
+        loadComponent: () =>
+          import('./inventoryManagement/pages/products/products.component'),
+        //Protege la ruta de la aplicación si no está autenticado y si tiene el rol adecuado
+        canActivate: [authGuard, roleGuardGuard],
+        data: { roles: ['Administrador'] },
       },
       {
         path: 'input-output',
@@ -36,13 +40,15 @@ export const routes: Routes = [
           import(
             './inventoryManagement/pages/input-output/input-output.component'
           ),
-        canActivate: [authGuard],
+        canActivate: [authGuard, roleGuardGuard],
+        data: { roles: ['Administrador', 'General'] },
       },
       {
         path: 'historical',
         loadComponent: () =>
           import('./inventoryManagement/pages/historical/historical.component'),
-        canActivate: [authGuard],
+        canActivate: [authGuard, roleGuardGuard],
+        data: { roles: ['Administrador'] },
       },
     ],
   },
