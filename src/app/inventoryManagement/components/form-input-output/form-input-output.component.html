@@ -3,8 +3,8 @@
   <mat-form-field class="wide-container">
     <mat-label>Id producto</mat-label>
     <input
-    (keyup)="getStatusProduct()"
-          autocomplete="off"
+      (keyup)="getStatusProduct()"
+      autocomplete="off"
       matInput
       type="text"
       formControlName="idProduct"
@@ -68,11 +68,18 @@
     type="button"
     class="btn"
     (click)="saveTransactionMovement()"
-    [hidden]="inputOutputForm.invalid || hiddenButton"
+    [hidden]="inputOutputForm.invalid || hiddenButton || (move.value == 2 && quantity.value > quantityInventory)"
   >
     Guardar
   </button>
+  @if (move.value == 2 && quantity.value > quantityInventory) {
+  <!--Si es una salida y la cantidad ingresa supera a la existencia, muestra el mensaje-->
+  <span>No hay existencia suficiente para dar la salida</span>
+  }
 </form>
 
 <h6>Detalle</h6>
-<app-detail-form [idProduct]="idProduct.value || '0'" />
+<app-detail-form
+  [idProduct]="idProduct.value || '0'"
+  (existenceProductChanged)="quantityInventory = $event"
+/>

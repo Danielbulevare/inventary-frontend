@@ -1,9 +1,10 @@
 import {
   Component,
   inject,
-  Input,
+  Input,Output,
   OnChanges,
   SimpleChanges,
+  EventEmitter,
 } from '@angular/core';
 import { MatInputModule } from '@angular/material/input';
 import {
@@ -39,8 +40,12 @@ export class DetailFormComponent implements OnChanges {
   });
 
   durationInSeconds = 5; //Duración de visualización del pop-put
+  productExistence?:Number;
 
   @Input() idProduct: any;
+
+  //Evento que pasará el la existencia del producto al componente padre
+  @Output() existenceProductChanged = new EventEmitter<Number>();
 
   constructor() {
     // Desactiva el control
@@ -80,6 +85,10 @@ export class DetailFormComponent implements OnChanges {
           .get('nameProduct')
           ?.setValue(response.nameProduct); //Imprime el nombre
         this.detailFormProduct.get('existence')?.setValue(response.existence); //Imprime la cantidad
+
+        //Recupera la existencia del producto y lo pasa al componente padre
+        this.productExistence = response.existence;
+        this.existenceProductChanged.emit(this.productExistence);
       },
       error: (response: any) => {
         this.openSnackBar(response.error.message, 'assets/img/cancel.svg');

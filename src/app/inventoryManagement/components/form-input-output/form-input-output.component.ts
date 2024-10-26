@@ -49,6 +49,7 @@ export class FormInputOutputComponent implements OnInit {
 
   durationInSeconds = 5; //Duración de visualización del pop-put
   hiddenButton: boolean = false;
+  quantityInventory: Number = 0;
 
   inputOutputForm = new FormGroup({
     idProduct: new FormControl('', [
