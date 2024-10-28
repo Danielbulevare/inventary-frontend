@@ -1,11 +1,12 @@
 import { HttpInterceptorFn } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
 
 export const authInterceptorTokenInterceptor: HttpInterceptorFn = (
   req,
   next
 ) => {
   const token = localStorage.getItem('authToken'); //Obtiene el token del almacenamiento
-  const loginUrl = 'http://localhost:8080/api/empleados/authenticate';
+  const loginUrl = `${environment.URL_BASE_EMPLOYEES}/authenticate`;
 
   if (req.url.includes(loginUrl)) {
     /*

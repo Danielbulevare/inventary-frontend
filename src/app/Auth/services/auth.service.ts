@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Observable, tap } from 'rxjs';
 import { UserDataServiceService } from '../../core/services/user-data/user-data-service.service';
 import { Role } from '../../core/models/roles/Role';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +12,7 @@ import { Role } from '../../core/models/roles/Role';
 export class AuthService {
   private userDataService = inject(UserDataServiceService);
   private LOGIN_URL: string =
-    'http://localhost:8080/api/empleados/authenticate';
+    `${environment.URL_BASE_EMPLOYEES}/authenticate`;
   private tokenKey: string = 'authToken';
 
   constructor(private httpClien: HttpClient, private router: Router) {}
