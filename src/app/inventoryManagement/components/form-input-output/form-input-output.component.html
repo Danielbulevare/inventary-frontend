@@ -68,7 +68,11 @@
     type="button"
     class="btn"
     (click)="saveTransactionMovement()"
-    [hidden]="inputOutputForm.invalid || hiddenButton || (move.value == 2 && quantity.value > quantityInventory)"
+    [hidden]="
+      inputOutputForm.invalid ||
+      hiddenButton ||
+      (move.value == 2 && quantity.value > quantityInventory) || quantity.value == 0
+    "
   >
     Guardar
   </button>

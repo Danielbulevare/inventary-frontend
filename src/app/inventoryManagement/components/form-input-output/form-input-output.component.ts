@@ -198,6 +198,6 @@ export class FormInputOutputComponent implements OnInit {
     //Este método limpia el formulario
     this.idProduct.setValue('');
     this.quantity.setValue('');
-    this.move.setValue('1');
+    //this.move.setValue('1');
   }
 }
