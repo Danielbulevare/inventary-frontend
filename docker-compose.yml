@@ -1,0 +1,22 @@
+services:
+  app_frontend_inventario_prod:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        ENVIRONMENT: prod
+    ports:
+      - 80:80
+    container_name: ui_inventario_prod
+    image: frontend_inventario:1
+
+  app_frontend_inventario_dev:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        ENVIRONMENT: dev
+    ports:
+      - 85:80
+    container_name: ui_inventario_dev
+    image: frontend_inventario:1
